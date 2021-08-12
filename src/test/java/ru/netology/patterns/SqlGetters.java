@@ -16,6 +16,15 @@ public class SqlGetters {
     }
 
     @SneakyThrows
+    public void cleanDatabase() {
+        var conn = getConnection();
+        conn.prepareStatement("DROP TABLE IF EXISTS cards;");
+        conn.prepareStatement("DROP TABLE IF EXISTS users;");
+        conn.prepareStatement("DROP TABLE IF EXISTS auth_codes");
+        conn.prepareStatement("DROP TABLE IF EXISTS card_transactions");
+    }
+
+    @SneakyThrows
     public String getUserIdVasya() {
         var conn = getConnection();
         var dataStmt = conn.createStatement().executeQuery("SELECT * FROM users");

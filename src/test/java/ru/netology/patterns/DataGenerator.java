@@ -34,17 +34,15 @@ public class DataGenerator {
 
     private static String sendRequest2(UserWithCode user) {
         Gson gson = new Gson();
-        String tmp =
-                given()
-                        .spec(requestSpec)
-                        .body(gson.toJson(user)) // передаём в теле объект, который будет преобразован в JSON
-                        .when()
-                        .post("/api/auth/verification")
-                        .then()
-                        .statusCode(200)
-                        .extract()
-                        .path("token");
-        return tmp;
+        return given()
+                .spec(requestSpec)
+                .body(gson.toJson(user)) // передаём в теле объект, который будет преобразован в JSON
+                .when()
+                .post("/api/auth/verification")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("token");
     }
 
     private static void perevod(Cards user, String token) {
