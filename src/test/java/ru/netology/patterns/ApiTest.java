@@ -1,12 +1,12 @@
 package ru.netology.patterns;
 
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import ru.netology.db.SqlGetters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ru.netology.patterns.DataGenerator.Registration.*;
+import static ru.netology.ru.netology.api.Api.Registration.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ApiTest {
@@ -18,7 +18,6 @@ public class ApiTest {
     }
 
     @Test
-    @SneakyThrows
     public void shouldSuccessfulTransferMoney() {
         testLogin();
         SqlGetters sqlGetters = new SqlGetters();
@@ -34,7 +33,6 @@ public class ApiTest {
     }
 
     @Test
-    @SneakyThrows
     public void shouldFallNegativeTransaction() {
         testLogin();
         SqlGetters sqlGetters = new SqlGetters();

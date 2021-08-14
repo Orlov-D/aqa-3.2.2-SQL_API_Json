@@ -1,15 +1,15 @@
-package ru.netology.patterns;
+package ru.netology.ru.netology.api;
 
 import com.google.gson.Gson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import lombok.Value;
+import ru.netology.data.DataGenerator;
 
 import static io.restassured.RestAssured.given;
 
-public class DataGenerator {
+public final class Api {
     private static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
@@ -18,10 +18,7 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
-    private DataGenerator() {
-    }
-
-    private static void sendRequest(UserForRegistration user) {
+    private static void sendRequest(DataGenerator.UserForRegistration user) {
         Gson gson = new Gson();
         given()
                 .spec(requestSpec)
@@ -32,7 +29,7 @@ public class DataGenerator {
                 .statusCode(200);
     }
 
-    private static String sendRequest2(UserWithCode user) {
+    private static String sendRequest2(DataGenerator.UserWithCode user) {
         Gson gson = new Gson();
         return given()
                 .spec(requestSpec)
@@ -45,7 +42,7 @@ public class DataGenerator {
                 .path("token");
     }
 
-    private static void perevod(Cards user, String token) {
+    private static void perevod(DataGenerator.Cards user, String token) {
         Gson gson = new Gson();
         given()
                 .spec(requestSpec)
@@ -56,42 +53,23 @@ public class DataGenerator {
                 .then()
                 .statusCode(200);
     }
-
     public static class Registration {
         private Registration() {
         }
 
         public static void testLogin() {
-            sendRequest(new UserForRegistration());
+            sendRequest(new DataGenerator.UserForRegistration());
         }
 
         public static String testVerific(String code) {
-            UserWithCode user = new UserWithCode(code);
+            DataGenerator.UserWithCode user = new DataGenerator.UserWithCode(code);
             return sendRequest2(user);
         }
 
         public static void testTransfer(String token, int amount) {
-            perevod(new Cards(amount), token);
+            perevod(new DataGenerator.Cards(amount), token);
         }
 
     }
 
-    @Value
-    public static class UserForRegistration {
-        String login = "vasya";
-        String password = "qwerty123";
-    }
-
-    @Value
-    public static class UserWithCode {
-        String login = "vasya";
-        String code;
-    }
-
-    @Value
-    public static class Cards {
-        String from = "5559 0000 0000 0002";
-        String to = "5559 0000 0000 0001";
-        int amount;
-    }
 }

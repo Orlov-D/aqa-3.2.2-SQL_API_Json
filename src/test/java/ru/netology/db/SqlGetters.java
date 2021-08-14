@@ -1,4 +1,4 @@
-package ru.netology.patterns;
+package ru.netology.db;
 
 import lombok.SneakyThrows;
 
@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 
 import static java.sql.Types.NULL;
 
-public class SqlGetters {
+public final class SqlGetters {
     @SneakyThrows
     public Connection getConnection() {
         return DriverManager.getConnection(
